@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Excel Extractor — Processing</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-header></div>
+
+      <main class="flex-1 w-full max-w-7xl mx-auto px-6 py-8">
+        <div class="max-w-xl mx-auto">
+          <div class="bg-white rounded-2xl shadow-card border border-brand-100 p-10 text-center">
+            <div id="loading-wrap">
+              <div
+                id="proc-icon"
+                class="w-16 h-16 rounded-full bg-brand-50 grid place-items-center mx-auto mb-4"
+              ></div>
+              <h2 id="proc-title" class="text-xl font-semibold text-slate-800">
+                Extracting your sheet
+              </h2>
+              <p id="proc-message" class="text-slate-500 mt-2">
+                Preparing the workbook...
+              </p>
+              <div class="mt-6 h-2 bg-brand-50 rounded-full overflow-hidden">
+                <div
+                  id="proc-bar"
+                  class="h-full bg-gradient-to-r from-brand-400 to-brand-600 transition-all duration-300"
+                  style="width: 5%"
+                ></div>
+              </div>
+              <p id="proc-pct" class="mt-2 text-xs text-slate-400">0% complete</p>
+            </div>
+
+            <div id="error-wrap" class="hidden">
+              <div class="w-16 h-16 rounded-full bg-red-50 grid place-items-center mx-auto mb-4">
+                <i data-lucide="alert-triangle" class="w-8 h-8 text-red-500"></i>
+              </div>
+              <h2 class="text-xl font-semibold text-slate-800">Something went wrong</h2>
+              <p id="error-message" class="text-slate-500 mt-2"></p>
+              <button
+                id="retry-btn"
+                class="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-brand-600 text-white hover:bg-brand-700"
+              >
+                Try again
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <div data-footer></div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/processing.js"></script>
+  </body>
+</html>

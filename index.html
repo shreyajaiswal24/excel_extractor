@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Excel Extractor — Upload</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-header></div>
+
+      <main class="flex-1 w-full max-w-7xl mx-auto px-6 py-8">
+        <div class="max-w-3xl mx-auto">
+          <div class="text-center mb-8">
+            <h1 class="text-3xl font-semibold text-slate-800">
+              Upload your Excel sheet
+            </h1>
+            <p class="text-slate-500 mt-2">
+              Drop your test results sheet — we'll parse it, count statuses, and
+              show a clean replica.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-card border border-brand-100 p-8">
+            <div
+              id="dropzone"
+              tabindex="0"
+              role="button"
+              aria-label="Upload Excel file"
+              class="relative rounded-xl border-2 border-dashed transition-all cursor-pointer p-12 text-center border-brand-200 bg-brand-50/40 hover:bg-brand-50"
+            >
+              <input
+                id="file-input"
+                type="file"
+                accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                class="hidden"
+              />
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-16 h-16 rounded-full bg-white shadow-soft grid place-items-center">
+                  <i data-lucide="upload-cloud" class="w-8 h-8 text-brand-500"></i>
+                </div>
+                <div>
+                  <p id="dropzone-label" class="text-slate-700 font-medium">
+                    Drag &amp; drop, or click to browse
+                  </p>
+                  <p class="text-xs text-slate-500 mt-1">
+                    Supports .xlsx and .xls (max 10 MB)
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="file-preview"
+              class="mt-5 hidden items-center justify-between bg-brand-50 border border-brand-100 rounded-lg px-4 py-3 flex"
+            >
+              <div class="flex items-center gap-3 min-w-0">
+                <i data-lucide="file-spreadsheet" class="w-5 h-5 text-brand-600 shrink-0"></i>
+                <div class="min-w-0">
+                  <div id="file-name" class="truncate text-sm font-medium text-slate-700"></div>
+                  <div id="file-size" class="text-xs text-slate-500"></div>
+                </div>
+              </div>
+              <button
+                type="button"
+                id="remove-file"
+                class="p-1.5 rounded-md hover:bg-white text-slate-500"
+                aria-label="Remove file"
+              >
+                <i data-lucide="x" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <div
+              id="upload-error"
+              class="mt-4 hidden text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2"
+            ></div>
+
+            <button
+              id="upload-btn"
+              disabled
+              class="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 hover:bg-brand-700 disabled:bg-brand-200 disabled:cursor-not-allowed text-white font-medium py-3 transition shadow-soft"
+            >
+              <span id="upload-btn-label">Upload &amp; Extract</span>
+            </button>
+
+            <div class="mt-4 text-center text-sm text-slate-500">
+              Don't have a sheet handy?
+              <a
+                href="demo-test-results.xlsx"
+                download
+                class="inline-flex items-center gap-1 text-brand-700 hover:text-brand-800 font-medium"
+              >
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                Download demo sheet
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <div data-footer></div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/upload.js"></script>
+  </body>
+</html>

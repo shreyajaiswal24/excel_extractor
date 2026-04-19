@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Excel Extractor — Results</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div data-header></div>
+
+      <main class="flex-1 w-full max-w-7xl mx-auto px-6 py-8">
+        <div class="space-y-5">
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <button
+              id="back-btn"
+              class="inline-flex items-center gap-1.5 text-sm text-brand-700 hover:text-brand-800"
+            >
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to upload
+            </button>
+            <div
+              id="file-meta"
+              class="hidden items-center gap-2 text-sm text-slate-600 bg-white px-3 py-1.5 rounded-lg border border-brand-100 flex"
+            >
+              <i data-lucide="file-spreadsheet" class="w-4 h-4 text-brand-600"></i>
+              <span id="file-meta-name" class="font-medium text-slate-700"></span>
+              <span class="text-slate-400">·</span>
+              <span id="file-meta-count"></span>
+            </div>
+          </div>
+
+          <div id="status-navbar" class="hidden"></div>
+
+          <div class="bg-white rounded-2xl shadow-card border border-brand-100 overflow-hidden">
+            <div class="px-5 py-4 border-b border-brand-100 flex items-center justify-between gap-3">
+              <div>
+                <h2 class="font-semibold text-slate-800">Sheet Replica</h2>
+                <p class="text-xs text-slate-500">
+                  Extracted rows shown exactly as in your workbook
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <span id="results-loader" class="hidden">
+                  <i data-lucide="loader-2" class="w-4 h-4 text-brand-500 spin"></i>
+                </span>
+
+                <div class="relative">
+                  <button
+                    id="filter-btn"
+                    type="button"
+                    class="relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm transition bg-white border-brand-100 text-slate-600 hover:bg-brand-50"
+                    aria-label="Filter rows"
+                  >
+                    <i data-lucide="filter" class="w-4 h-4"></i>
+                    Filter
+                    <span
+                      id="filter-badge"
+                      class="ml-1 hidden inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-brand-600 text-white text-[11px] font-semibold"
+                    ></span>
+                  </button>
+
+                  <div
+                    id="filter-popover"
+                    class="hidden absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-soft border border-brand-100 p-4 z-20"
+                  >
+                    <div class="flex items-center justify-between mb-3">
+                      <h3 class="text-sm font-semibold text-slate-700">Filters</h3>
+                      <button
+                        id="filter-close"
+                        class="p-1 rounded hover:bg-brand-50 text-slate-400"
+                        aria-label="Close"
+                      >
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                      </button>
+                    </div>
+
+                    <div class="mb-4">
+                      <label class="block text-xs font-medium text-slate-500 mb-1.5">Search</label>
+                      <div class="relative">
+                        <i data-lucide="search" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                        <input
+                          id="filter-search"
+                          type="text"
+                          placeholder="ID, description, actual..."
+                          class="w-full pl-8 pr-3 py-2 text-sm rounded-lg border border-brand-200 bg-white focus:outline-none focus:ring-2 focus:ring-brand-300"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="mb-4">
+                      <label class="block text-xs font-medium text-slate-500 mb-1.5">Status</label>
+                      <div id="filter-status-group" class="grid grid-cols-2 gap-2"></div>
+                    </div>
+
+                    <div class="flex items-center justify-between gap-2 pt-2 border-t border-brand-50">
+                      <button
+                        id="filter-clear"
+                        class="text-sm text-slate-500 hover:text-slate-700 px-2 py-1.5"
+                      >
+                        Clear all
+                      </button>
+                      <button
+                        id="filter-apply"
+                        class="text-sm bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-1.5 rounded-lg shadow-soft"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-brand-50/60 border-b border-brand-100">
+                  <tr>
+                    <th class="text-left font-semibold text-slate-600 px-4 py-3 whitespace-nowrap">#</th>
+                    <th class="text-left font-semibold text-slate-600 px-4 py-3 whitespace-nowrap">Test Case ID</th>
+                    <th class="text-left font-semibold text-slate-600 px-4 py-3 whitespace-nowrap">Description</th>
+                    <th class="text-left font-semibold text-slate-600 px-4 py-3 whitespace-nowrap">Expected</th>
+                    <th class="text-left font-semibold text-slate-600 px-4 py-3 whitespace-nowrap">Actual</th>
+                    <th class="text-left font-semibold text-slate-600 px-4 py-3 whitespace-nowrap">Status</th>
+                    <th class="text-left font-semibold text-slate-600 px-4 py-3 whitespace-nowrap">Remarks</th>
+                  </tr>
+                </thead>
+                <tbody id="results-tbody"></tbody>
+              </table>
+              <div
+                id="results-empty"
+                class="hidden text-center text-slate-400 py-12"
+              >
+                No rows on this page.
+              </div>
+            </div>
+
+            <div
+              class="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 border-t border-brand-100 bg-brand-50/30"
+            >
+              <div id="pagination-info" class="text-sm text-slate-600"></div>
+              <div class="flex items-center gap-2">
+                <label for="page-size" class="text-sm text-slate-600">Rows per page</label>
+                <select
+                  id="page-size"
+                  class="text-sm border border-brand-200 rounded-md px-2 py-1 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-300"
+                >
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+
+                <div class="flex items-center gap-1 ml-2">
+                  <button
+                    id="prev-page"
+                    class="p-1.5 rounded-md hover:bg-white text-slate-600 disabled:text-slate-300 disabled:hover:bg-transparent"
+                    aria-label="Previous page"
+                  >
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                  </button>
+                  <div id="pagination-pages" class="flex items-center gap-1"></div>
+                  <button
+                    id="next-page"
+                    class="p-1.5 rounded-md hover:bg-white text-slate-600 disabled:text-slate-300 disabled:hover:bg-transparent"
+                    aria-label="Next page"
+                  >
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <div data-footer></div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/results.js"></script>
+  </body>
+</html>
