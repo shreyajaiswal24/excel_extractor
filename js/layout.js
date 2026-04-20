@@ -24,21 +24,18 @@
               <i data-lucide="file-spreadsheet" class="w-5 h-5 text-white"></i>
             </div>
             <div class="leading-tight">
-              <div class="font-semibold text-slate-800">Excel Extractor</div>
+              <div class="font-semibold text-slate-800">Report Reviewer</div>
               <div class="text-xs text-slate-500">
-                Upload &middot; Parse &middot; Visualize
+                Upload &middot; Parse &middot; Validate
               </div>
             </div>
           </a>
           <nav class="hidden sm:flex items-center gap-2 text-sm">
-            <a href="index.html"
-              class="px-3 py-1.5 rounded-md transition ${
-                onUpload
-                  ? "bg-brand-50 text-brand-700 font-medium"
-                  : "text-slate-600 hover:bg-brand-50"
-              }">
-              New Upload
-            </a>
+            ${
+              onUpload
+                ? ""
+                : `<a href="index.html" class="px-3 py-1.5 rounded-md transition text-slate-600 hover:bg-brand-50">New Upload</a>`
+            }
           </nav>
         </div>
       </header>
@@ -50,7 +47,7 @@
     if (!slot) return;
     slot.innerHTML = `
       <footer class="text-center text-xs text-slate-400 py-4">
-        Excel Extractor &middot; Light Edition
+        Report Reviewer &middot; Light Edition
       </footer>
     `;
   }

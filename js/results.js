@@ -21,10 +21,6 @@
   };
 
   // --- DOM refs ---
-  const backBtn = document.getElementById("back-btn");
-  const fileMeta = document.getElementById("file-meta");
-  const fileMetaName = document.getElementById("file-meta-name");
-  const fileMetaCount = document.getElementById("file-meta-count");
   const statusNavbar = document.getElementById("status-navbar");
   const loader = document.getElementById("results-loader");
   const tableBody = document.getElementById("results-tbody");
@@ -51,9 +47,6 @@
     return;
   }
 
-  backBtn.addEventListener("click", () => {
-    window.location.href = "index.html";
-  });
 
   // --- Status navbar ---
   const STATUS_ITEMS = [
@@ -302,19 +295,6 @@
     load();
   }
 
-  // --- Loader + meta ---
-  function renderFileMeta() {
-    if (!state.data) {
-      fileMeta.classList.add("hidden");
-      return;
-    }
-    fileMeta.classList.remove("hidden");
-    fileMetaName.textContent = state.data.fileName;
-    const filtersActive = state.statuses.length > 0 || state.search.length > 0;
-    fileMetaCount.textContent =
-      state.data.totalRows + " " + (filtersActive ? "matching " : "") + "rows";
-  }
-
   function setLoading(flag) {
     state.loading = flag;
     if (flag) loader.classList.remove("hidden");
@@ -332,7 +312,6 @@
       renderStatusNavbar(d.counts);
       renderTable(d.rows);
       renderPagination();
-      renderFileMeta();
     } catch (e) {
       console.error(e);
       tableEmpty.textContent = "Failed to load results.";
